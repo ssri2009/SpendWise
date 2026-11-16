@@ -1,0 +1,582 @@
+@import "tailwindcss";
+
+/* Dark mode follows the .dark class that the theme system puts on <html>. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* =====================================================================
+   Theme tokens
+   Components never use raw colours. They use the Tailwind colours
+   defined in @theme below (bg-surface, text-muted, border-line,
+   text-accent, text-income ...), which read these variables. Switching
+   theme or accent only changes the variables.
+   ===================================================================== */
+
+:root {
+  color-scheme: light;
+
+  --sw-bg: #eef1ff;
+  --sw-bg-2: #ffffff;
+  --sw-surface: rgb(255 255 255 / 0.7);
+  --sw-elevated: #ffffff;
+  --sw-subtle: rgb(27 32 64 / 0.05);
+  --sw-border: rgb(91 76 200 / 0.16);
+  --sw-text: #1b2040;
+  --sw-muted: #5d6490;
+
+  --sw-accent: #6d4aff;
+  --sw-accent-2: #0891b2;
+  --sw-accent-fg: #ffffff;
+
+  --sw-income: #0d9467;
+  --sw-expense: #dc2f55;
+  --sw-warning: #b45309;
+
+  --sw-shadow: 0 18px 50px -12px rgb(80 70 160 / 0.25);
+  --sw-blob-3: #ff7eb6;
+
+  /* Chart series colours (matches the backend's --viz-1..7 convention) */
+  --sw-viz-1: #6d4aff;
+  --sw-viz-2: #0891b2;
+  --sw-viz-3: #0d9467;
+  --sw-viz-4: #c2410c;
+  --sw-viz-5: #db2777;
+  --sw-viz-6: #4f5b93;
+  --sw-viz-7: #a16207;
+}
+
+.dark {
+  color-scheme: dark;
+
+  --sw-bg: #0b0f1f;
+  --sw-bg-2: #121833;
+  --sw-surface: rgb(255 255 255 / 0.055);
+  --sw-elevated: #161c3a;
+  --sw-subtle: rgb(255 255 255 / 0.06);
+  --sw-border: rgb(255 255 255 / 0.11);
+  --sw-text: #f1f3ff;
+  --sw-muted: #9aa3c7;
+
+  --sw-accent: #7c5cff;
+  --sw-accent-2: #00d4ff;
+  --sw-accent-fg: #ffffff;
+
+  --sw-income: #2ee59d;
+  --sw-expense: #ff5d7a;
+  --sw-warning: #ffb547;
+
+  --sw-shadow: 0 24px 60px -16px rgb(0 0 0 / 0.6);
+  --sw-blob-3: #ff5d9e;
+
+  --sw-viz-1: #7c5cff;
+  --sw-viz-2: #00d4ff;
+  --sw-viz-3: #2ee59d;
+  --sw-viz-4: #ffb547;
+  --sw-viz-5: #ff5d9e;
+  --sw-viz-6: #8b93c9;
+  --sw-viz-7: #f97362;
+}
+
+/* ---------- Accent presets (light values, then dark values) ---------- */
+[data-accent="ocean"]   { --sw-accent: #0369a1; --sw-accent-2: #0891b2; --sw-accent-fg: #ffffff; }
+[data-accent="emerald"] { --sw-accent: #047857; --sw-accent-2: #4d7c0f; --sw-accent-fg: #ffffff; }
+[data-accent="rose"]    { --sw-accent: #e11d48; --sw-accent-2: #ea580c; --sw-accent-fg: #ffffff; }
+
+.dark[data-accent="ocean"]   { --sw-accent: #38bdf8; --sw-accent-2: #22d3ee; --sw-accent-fg: #04121f; }
+.dark[data-accent="emerald"] { --sw-accent: #34d399; --sw-accent-2: #a3e635; --sw-accent-fg: #04201a; }
+.dark[data-accent="rose"]    { --sw-accent: #fb7185; --sw-accent-2: #fb923c; --sw-accent-fg: #2a0610; }
+
+/* ---------- Tailwind colours that read the tokens ---------- */
+@theme inline {
+  --color-bg: var(--sw-bg);
+  --color-bg-2: var(--sw-bg-2);
+  --color-surface: var(--sw-surface);
+  --color-elevated: var(--sw-elevated);
+  --color-subtle: var(--sw-subtle);
+  --color-line: var(--sw-border);
+  --color-fg: var(--sw-text);
+  --color-muted: var(--sw-muted);
+
+  --color-accent: var(--sw-accent);
+  --color-accent-2: var(--sw-accent-2);
+  --color-accent-fg: var(--sw-accent-fg);
+
+  --color-income: var(--sw-income);
+  --color-expense: var(--sw-expense);
+  --color-warning: var(--sw-warning);
+
+  --color-viz-1: var(--sw-viz-1);
+  --color-viz-2: var(--sw-viz-2);
+  --color-viz-3: var(--sw-viz-3);
+  --color-viz-4: var(--sw-viz-4);
+  --color-viz-5: var(--sw-viz-5);
+  --color-viz-6: var(--sw-viz-6);
+  --color-viz-7: var(--sw-viz-7);
+
+  --shadow-glass: var(--sw-shadow);
+
+  --font-sans: "Inter", "Segoe UI", system-ui, -apple-system, Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "JetBrains Mono", "Cascadia Code", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+/* ---------- Base ---------- */
+@layer base {
+  html {
+    background-color: var(--sw-bg);
+    color: var(--sw-text);
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    min-height: 100dvh;
+    font-family: var(--font-sans);
+    font-feature-settings: "cv11", "ss01";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+
+  button:not(:disabled),
+  [role="button"]:not([aria-disabled="true"]) {
+    cursor: pointer;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--sw-accent);
+    outline-offset: 2px;
+  }
+
+  ::selection {
+    background: color-mix(in oklab, var(--sw-accent) 35%, transparent);
+  }
+
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: color-mix(in oklab, var(--sw-muted) 40%, transparent) transparent;
+  }
+}
+
+/* ---------- Utilities ---------- */
+/* Frosted surface. Saturation lifts the aurora's colour through the panel; rounded glass
+   cards also get a sheen, a top highlight and a cursor spotlight (see "Cards" below). */
+@utility glass {
+  background-color: var(--sw-surface);
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+}
+
+@utility accent-gradient {
+  background-image: linear-gradient(135deg, var(--sw-accent), var(--sw-accent-2));
+}
+
+@utility gradient-text {
+  background-image: linear-gradient(90deg, var(--sw-accent), var(--sw-accent-2));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Smooth colour change when the user switches theme (added for ~350 ms). */
+.theme-transition,
+.theme-transition *,
+.theme-transition *::before,
+.theme-transition *::after {
+  transition-property: background-color, border-color, color, fill, stroke, box-shadow !important;
+  transition-duration: 300ms !important;
+  transition-timing-function: ease !important;
+}
+
+/* =====================================================================
+   Visual polish layer
+   Everything below is decoration: it never carries meaning, it reads the
+   theme tokens (so it follows light/dark and the accent preset), it only
+   animates transform and opacity, and it stands still under reduced motion.
+   Forced-colours mode and print drop it entirely.
+   ===================================================================== */
+
+/* Registered so the card spotlight can fade in and out smoothly. */
+@property --sw-spot-a {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: 0%;
+}
+
+:root {
+  --sw-ease: cubic-bezier(0.22, 1, 0.36, 1);
+
+  --sw-aurora-opacity: 0.34;
+  --sw-ambient-top: rgb(255 255 255 / 0.7);
+  --sw-vignette: transparent;
+  --sw-glow-opacity: 0.14;
+  --sw-grain-opacity: 0.03;
+
+  --sw-glass-sheen: rgb(255 255 255 / 0.5);
+  --sw-glass-edge: rgb(255 255 255 / 0.85);
+  --sw-spot-strength: 7%;
+  --sw-ring-strength: 55%;
+
+  --sw-skeleton-base: rgb(27 32 64 / 0.06);
+  --sw-skeleton-sheen: rgb(255 255 255 / 0.75);
+}
+
+.dark {
+  --sw-aurora-opacity: 0.5;
+  --sw-ambient-top: color-mix(in oklab, var(--sw-accent) 16%, transparent);
+  --sw-vignette: rgb(2 4 14 / 0.45);
+  --sw-glow-opacity: 0.2;
+  --sw-grain-opacity: 0.045;
+
+  --sw-glass-sheen: rgb(255 255 255 / 0.045);
+  --sw-glass-edge: rgb(255 255 255 / 0.09);
+  --sw-spot-strength: 11%;
+  --sw-ring-strength: 70%;
+
+  --sw-skeleton-base: rgb(255 255 255 / 0.06);
+  --sw-skeleton-sheen: rgb(255 255 255 / 0.07);
+}
+
+/* ---------- Ambient backdrop: aurora, top light, cursor light, grain ---------- */
+.sw-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+  contain: strict;
+}
+
+.sw-aurora {
+  position: absolute;
+  inset: -15%;
+  opacity: var(--sw-aurora-opacity);
+}
+
+/* Soft ellipses (gradients, not blur filters: no per-frame filtering cost). */
+.sw-aurora-band {
+  position: absolute;
+  border-radius: 50%;
+  will-change: transform;
+  animation-duration: 46s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+.sw-aurora-a {
+  width: 72vmax;
+  height: 32vmax;
+  top: 0;
+  left: -8%;
+  background: radial-gradient(closest-side, var(--sw-accent), transparent);
+  animation-name: sw-aurora-a;
+}
+.sw-aurora-b {
+  width: 64vmax;
+  height: 28vmax;
+  top: 30%;
+  right: -12%;
+  background: radial-gradient(closest-side, var(--sw-accent-2), transparent);
+  animation-name: sw-aurora-b;
+  animation-duration: 58s;
+}
+.sw-aurora-c {
+  width: 46vmax;
+  height: 24vmax;
+  bottom: 2%;
+  left: 24%;
+  opacity: 0.6;
+  background: radial-gradient(closest-side, var(--sw-blob-3), transparent);
+  animation-name: sw-aurora-c;
+  animation-duration: 67s;
+}
+
+@keyframes sw-aurora-a {
+  from { transform: translate3d(0, 0, 0) rotate(-10deg) scale(1); }
+  to   { transform: translate3d(14vw, 8vh, 0) rotate(6deg) scale(1.15); }
+}
+@keyframes sw-aurora-b {
+  from { transform: translate3d(0, 0, 0) rotate(12deg) scale(1.05); }
+  to   { transform: translate3d(-16vw, -10vh, 0) rotate(-6deg) scale(0.95); }
+}
+@keyframes sw-aurora-c {
+  from { transform: translate3d(0, 0, 0) rotate(0deg) scale(1); }
+  to   { transform: translate3d(10vw, -14vh, 0) rotate(14deg) scale(1.2); }
+}
+
+/* Light falling from the top of the screen, and a gentle edge falloff in dark mode. */
+.sw-ambient {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(110% 55% at 50% -8%, var(--sw-ambient-top), transparent 62%),
+    radial-gradient(140% 90% at 50% 50%, transparent 55%, var(--sw-vignette));
+}
+
+/* Follows the pointer (positioned from JS); seen softly through the glass panels. */
+.sw-cursor-glow {
+  position: absolute;
+  top: -300px;
+  left: -300px;
+  width: 600px;
+  height: 600px;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, var(--sw-accent), transparent);
+  opacity: 0;
+  will-change: transform, opacity;
+  transition:
+    opacity 0.6s ease,
+    transform 0.55s var(--sw-ease);
+}
+.sw-cursor-glow[data-on="true"] {
+  opacity: var(--sw-glow-opacity);
+}
+
+/* Fine film grain: keeps large gradients from banding on 8-bit screens. */
+.sw-grain {
+  position: absolute;
+  inset: 0;
+  opacity: var(--sw-grain-opacity);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.5 0 0 0 0 0.5 0 0 0 0 0.5 0 0 0 1 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ---------- Cards: premium glass, spotlight, border glow ----------
+   Applies to every rounded glass surface. The base sits in the components
+   layer, so utilities such as `fixed` or `absolute` still win. */
+@layer components {
+  :where(.glass.rounded-3xl, .glass.rounded-2xl, .sw-card) {
+    position: relative;
+    isolation: isolate;
+  }
+}
+
+/* Sheen + a 1px top highlight + the spotlight. Painted over the card's own
+   background but under its content (negative z-index inside the isolated card). */
+:is(.glass.rounded-3xl, .glass.rounded-2xl, .sw-card)::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      460px circle at var(--sx, 50%) var(--sy, -30%),
+      color-mix(in oklab, var(--sw-accent) var(--sw-spot-a), transparent),
+      transparent 70%
+    ),
+    linear-gradient(180deg, var(--sw-glass-sheen), transparent 38%);
+  box-shadow: inset 0 1px 0 0 var(--sw-glass-edge);
+  transition: --sw-spot-a 0.4s ease;
+}
+
+/* A 1px ring just inside the border that lights up nearest the cursor (inside, so
+   cards with overflow-hidden keep it too). */
+:is(.glass.rounded-3xl, .glass.rounded-2xl, .sw-card)::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  padding: 1px;
+  border-radius: inherit;
+  pointer-events: none;
+  background: radial-gradient(
+    320px circle at var(--sx, 50%) var(--sy, -30%),
+    color-mix(in oklab, var(--sw-accent) var(--sw-ring-strength), transparent),
+    transparent 70%
+  );
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  :is(.glass.rounded-3xl, .glass.rounded-2xl, .sw-card):hover::before {
+    --sw-spot-a: var(--sw-spot-strength);
+  }
+  :is(.glass.rounded-3xl, .glass.rounded-2xl, .sw-card):hover::after {
+    opacity: 1;
+  }
+
+  /* Small stat tiles also rise a little. */
+  .sw-lift {
+    transition:
+      translate 0.35s var(--sw-ease),
+      box-shadow 0.35s var(--sw-ease);
+  }
+  .sw-lift:hover {
+    translate: 0 -3px;
+  }
+}
+
+/* ---------- Skeleton loaders ---------- */
+@layer components {
+  .sw-skeleton {
+    position: relative;
+    overflow: hidden;
+    background-color: var(--sw-skeleton-base);
+  }
+  .sw-skeleton::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    transform: translateX(-100%);
+    background: linear-gradient(90deg, transparent, var(--sw-skeleton-sheen) 50%, transparent);
+    animation: sw-shimmer 1.6s ease-in-out infinite;
+  }
+}
+
+@keyframes sw-shimmer {
+  to { transform: translateX(100%); }
+}
+
+/* Thin progress line while a screen's code is loading (appears only if it takes a moment). */
+.sw-route-progress {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 70;
+  height: 2px;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+  animation: sw-fade-in 0.2s ease 0.15s forwards;
+}
+.sw-route-progress::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform-origin: left center;
+  background-image: linear-gradient(90deg, var(--sw-accent), var(--sw-accent-2));
+  box-shadow: 0 0 12px var(--sw-accent);
+  animation: sw-progress 2.4s var(--sw-ease) 0.15s both;
+}
+
+@keyframes sw-progress {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(0.9); }
+}
+@keyframes sw-fade-in {
+  to { opacity: 1; }
+}
+
+/* ---------- Micro-interactions ---------- */
+@layer base {
+  /* A 1px press on every button: tactile, but small enough for full-width rows. */
+  button:not(:disabled):active,
+  [role="button"]:not([aria-disabled="true"]):active {
+    transform: translateY(1px);
+  }
+
+  input[type="checkbox"],
+  input[type="radio"],
+  input[type="range"],
+  progress {
+    accent-color: var(--sw-accent);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* Focus rings settle into place instead of snapping. */
+  :focus-visible {
+    transition: outline-offset 0.15s var(--sw-ease);
+  }
+
+  /* Primary (gradient) buttons: the gradient drifts and brightens slightly on hover. */
+  :is(button, a).accent-gradient:not(:disabled) {
+    background-size: 160% 160%;
+    background-position: 0% 50%;
+    transition:
+      background-position 0.6s var(--sw-ease),
+      filter 0.2s ease,
+      box-shadow 0.2s ease;
+  }
+  :is(button, a).accent-gradient:not(:disabled):hover {
+    background-position: 100% 50%;
+    filter: brightness(1.06) saturate(1.06);
+  }
+
+  /* Native dialogs: the dim layer fades in with the panel. */
+  dialog[open]::backdrop {
+    animation: sw-backdrop-in 0.22s ease-out;
+  }
+
+  /* Charts: the hover cursor band and the active point ease in. */
+  .recharts-tooltip-cursor {
+    transition: opacity 0.15s ease;
+  }
+  .recharts-active-dot {
+    animation: sw-pop 0.22s var(--sw-ease);
+    transform-box: fill-box;
+    transform-origin: center;
+  }
+}
+
+@keyframes sw-backdrop-in {
+  from { opacity: 0; }
+}
+@keyframes sw-pop {
+  from { transform: scale(0.4); opacity: 0; }
+}
+
+/* ---------- Reduced motion, forced colours, print ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .sw-aurora-band,
+  .sw-skeleton::after {
+    animation: none;
+  }
+  .sw-skeleton::after {
+    display: none;
+  }
+  .sw-cursor-glow {
+    display: none;
+  }
+  .sw-route-progress::before {
+    animation: none;
+    transform: scaleX(0.6);
+  }
+}
+
+@media (forced-colors: active) {
+  .sw-backdrop,
+  :is(.glass.rounded-3xl, .glass.rounded-2xl, .sw-card)::before,
+  :is(.glass.rounded-3xl, .glass.rounded-2xl, .sw-card)::after,
+  .sw-skeleton::after {
+    display: none;
+  }
+}
+
+@media print {
+  .sw-backdrop,
+  .sw-route-progress {
+    display: none;
+  }
+}
+
+/* ---------- Reports palette ----------
+   Six categorical slots from the SpendWise hue family, ordered and stepped so every
+   adjacent pair stays distinct for colour-blind readers (validated with the dataviz
+   checker: lightness band, chroma floor, CVD ΔE ≥ 8, normal-vision ΔE ≥ 15, ≥ 3:1 on
+   the surface), selected separately for light and dark. Slot order is fixed: a
+   category keeps its colour when filters change. "Other" is a neutral, never a hue.
+   Income / expenses / net use slots 4 / 3 / 1 (green / rust / violet), which also pass
+   as a set (red vs green does not, for deuteranopes). */
+:root {
+  --sw-rp-1: #6d4aff;
+  --sw-rp-2: #0891b2;
+  --sw-rp-3: #c2410c;
+  --sw-rp-4: #0d9467;
+  --sw-rp-5: #a16207;
+  --sw-rp-6: #db2777;
+  --sw-rp-other: #9ca3c4;
+  --sw-rp-grid: rgb(27 32 64 / 0.08);
+}
+.dark {
+  --sw-rp-1: #7c5cff;
+  --sw-rp-2: #0ba5c9;
+  --sw-rp-3: #d9622b;
+  --sw-rp-4: #1f9e6d;
+  --sw-rp-5: #c98500;
+  --sw-rp-6: #e0478a;
+  --sw-rp-other: #5d6490;
+  --sw-rp-grid: rgb(255 255 255 / 0.07);
+}
