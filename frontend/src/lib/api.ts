@@ -80,7 +80,7 @@ function readCookie(name: string): string {
 async function fetchCsrf(): Promise<string> {
   let res: Response;
   try {
-    res = await fetch(CSRF_ENDPOINT, { credentials: 'same-origin', headers: { Accept: 'application/json' } });
+    res = await fetch(`${API_BASE_URL}${CSRF_ENDPOINT}`, { credentials: 'include', headers: { Accept: 'application/json' } });
   } catch {
     throw new ApiError(0, NETWORK_MESSAGE);
   }
