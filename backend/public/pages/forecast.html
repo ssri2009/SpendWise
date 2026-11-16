@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Forecast · SpendWise</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E💸%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/app.css">
+</head>
+<body data-app="1" data-page="forecast">
+<script src="/js/theme-boot.js"></script>
+
+<div class="bg"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div></div>
+
+<nav id="nav"></nav>
+
+<main class="page">
+  <div class="page-head">
+    <h2>Cash-flow forecast</h2>
+    <p>What your balance is likely to be, based on your schedules and anything already dated in the future.</p>
+  </div>
+
+  <div class="cal-bar">
+    <div class="tabs" id="fHorizon" role="group" aria-label="Forecast length">
+      <button class="small-btn" type="button" data-days="7">7 days</button>
+      <button class="small-btn active" type="button" data-days="30">30 days</button>
+      <button class="small-btn" type="button" data-days="90">90 days</button>
+    </div>
+    <select id="fAccount" aria-label="Account"></select>
+  </div>
+
+  <section class="summary four" aria-label="Forecast summary">
+    <div class="s-card bal"><small>Current funds</small><h3 id="fNow">₹0</h3><span class="hint">As of today</span></div>
+    <div class="s-card inc"><small>Upcoming income</small><h3 id="fInc">₹0</h3><span class="hint" id="fIncHint"></span></div>
+    <div class="s-card exp"><small>Upcoming expenses</small><h3 id="fExp">₹0</h3><span class="hint" id="fExpHint"></span></div>
+    <div class="s-card net" id="fEstCard"><small>Estimated balance</small><h3 id="fEst">₹0</h3><span class="hint" id="fEstHint"></span></div>
+  </section>
+  <p class="notice" id="fWarn" hidden></p>
+
+  <section class="panel">
+    <h3>📈 Balance day by day</h3>
+    <div class="chart-box" id="fChart"></div>
+  </section>
+
+  <section class="panel">
+    <h3>🔭 7, 30 and 90 days side by side</h3>
+    <div class="table-wrap"><table class="plain-table" id="fTable"></table></div>
+  </section>
+
+  <section class="panel">
+    <h3>🧮 Budget impact</h3>
+    <p class="summary-note" id="fImpactNote"></p>
+    <div id="fImpact"></div>
+  </section>
+
+  <section class="panel">
+    <h3>🗓 What is coming</h3>
+    <div class="row-list" id="fEvents"></div>
+    <p class="empty" id="fEmpty" hidden>No scheduled money in this period. Add schedules to see them here.</p>
+  </section>
+</main>
+
+<div class="toast" id="toast"></div>
+<script type="module" src="/js/layout.js"></script>
+<script type="module" src="/js/pages/forecast.js"></script>
+</body>
+</html>

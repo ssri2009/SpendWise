@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calendar · SpendWise</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E💸%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/app.css">
+</head>
+<body data-app="1" data-page="calendar">
+<script src="/js/theme-boot.js"></script>
+
+<div class="bg"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div></div>
+
+<nav id="nav"></nav>
+
+<main class="page">
+  <div class="page-head">
+    <h2>Calendar</h2>
+    <p>Your bills, income and scheduled transactions, day by day.</p>
+  </div>
+
+  <div class="cal-bar">
+    <div class="cal-nav">
+      <button class="small-btn" id="cPrev" type="button" aria-label="Previous month">‹</button>
+      <h3 id="cTitle">…</h3>
+      <button class="small-btn" id="cNext" type="button" aria-label="Next month">›</button>
+      <button class="small-btn" id="cToday" type="button">This month</button>
+    </div>
+    <select id="cAccount" aria-label="Account"></select>
+  </div>
+
+  <section class="summary" aria-label="Month totals">
+    <div class="s-card inc"><small>Income this month</small><h3 id="cInc">₹0</h3></div>
+    <div class="s-card exp"><small>Expenses this month</small><h3 id="cExp">₹0</h3></div>
+    <div class="s-card bal"><small>Net</small><h3 id="cNet">₹0</h3></div>
+  </section>
+
+  <section class="panel">
+    <div class="cal-legend" aria-hidden="true">
+      <span class="ev income">Income</span><span class="ev expense">Expense</span>
+      <span class="ev expense projected">Upcoming</span><span class="ev expense pending">Waiting for approval</span>
+      <span class="ev expense posted">Paid / created</span><span class="ev expense skipped">Skipped</span>
+    </div>
+    <div class="cal-grid" id="cGrid" role="grid" aria-label="Calendar"></div>
+  </section>
+
+  <section class="panel" id="dayPanel" hidden>
+    <h3 id="dayTitle"></h3>
+    <div class="row-list" id="dayList"></div>
+  </section>
+</main>
+
+<div class="toast" id="toast"></div>
+<script type="module" src="/js/layout.js"></script>
+<script type="module" src="/js/pages/calendar.js"></script>
+</body>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Transactions · SpendWise</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E💸%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/app.css">
+</head>
+<body data-app="1" data-page="transactions">
+<script src="/js/theme-boot.js"></script>
+
+<div class="bg"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div></div>
+
+<nav id="nav"></nav>
+
+<main class="page">
+  <div class="dash-head">
+    <div class="page-head">
+      <h2>Transactions</h2>
+      <p>Every transaction, day by day.</p>
+    </div>
+    <div class="tools">
+      <select id="fAccount" aria-label="Account"></select>
+      <select id="fMonth" aria-label="Month"></select>
+      <select id="fType" aria-label="Type">
+        <option value="all">All types</option>
+        <option value="income">Income</option>
+        <option value="expense">Expenses</option>
+      </select>
+      <select id="fCategory" aria-label="Category"></select>
+      <select id="fCleared" aria-label="Cleared status">
+        <option value="all">Cleared + uncleared</option>
+        <option value="yes">✓ Cleared only</option>
+        <option value="no">Not cleared yet</option>
+      </select>
+      <input id="fSearch" type="search" placeholder="Search…" aria-label="Search transactions" maxlength="80">
+      <a class="small-btn" id="csvLink" href="/api/export/transactions.csv" download>⬇ CSV</a>
+    </div>
+  </div>
+
+  <div class="filter-chips"><span class="filter-chip" id="payeeChip" hidden></span></div>
+
+  <section class="summary four" aria-label="Summary">
+    <div class="s-card bal" title="The money you hold right now: the sum of all your account balances (opening balances included). It does not change with the filters above and always matches Settings → Accounts.">
+      <small>Total Funds</small><h3 id="sFunds">₹0</h3><span class="hint">All accounts, right now</span>
+    </div>
+    <div class="s-card net" title="Income minus expenses for the transactions shown by the filters above (for example, this month). Opening balances are not included.">
+      <small>Net This Period</small><h3 id="sNet">₹0</h3><span class="hint" id="netHint">Income − expenses, filtered</span>
+    </div>
+    <div class="s-card inc"><small>Income</small><h3 id="sInc">₹0</h3><span class="hint">Filtered</span></div>
+    <div class="s-card exp"><small>Expenses</small><h3 id="sExp">₹0</h3><span class="hint">Filtered</span></div>
+  </section>
+  <p class="summary-note">Total Funds is what you have across all accounts today. Net This Period, Income and Expenses follow the filters above, so they can differ from Total Funds.</p>
+
+  <div class="tx-layout">
+    <div class="panel">
+      <h3>➕ Add transaction</h3>
+      <form id="addForm" class="stack" novalidate>
+        <div id="addFields"></div>
+        <p class="err" id="addErr" role="alert"></p>
+        <button class="btn btn-primary" id="addBtn" type="submit">Add</button>
+      </form>
+    </div>
+
+    <div class="panel">
+      <div class="bulk" id="bulkBar" hidden>
+        <b id="bulkCount"></b>
+        <select id="bulkCat" aria-label="Set category for selected"></select>
+        <button class="small-btn" id="bulkSet" type="button">Set category</button>
+        <button class="small-btn" id="bulkClear" type="button">Mark cleared</button>
+        <button class="small-btn" id="bulkUnclear" type="button">Mark uncleared</button>
+        <button class="small-btn danger" id="bulkDelete" type="button">Delete</button>
+        <button class="small-btn" id="bulkNone" type="button">Clear selection</button>
+      </div>
+      <div class="list-head">
+        <label class="check"><input type="checkbox" class="tx-check" id="selAll"> Select all shown</label>
+        <small id="count"></small>
+      </div>
+      <div id="list"></div>
+      <p class="empty" id="empty" hidden>No transactions here yet. Add one on the left, or import your old backup in Settings.</p>
+      <p class="empty" id="loading">Loading…</p>
+      <div class="more"><button class="small-btn" id="more" type="button" hidden>Load more</button></div>
+    </div>
+  </div>
+</main>
+
+<div class="toast" id="toast"></div>
+<script type="module" src="/js/layout.js"></script>
+<script type="module" src="/js/pages/transactions.js"></script>
+</body>
+</html>

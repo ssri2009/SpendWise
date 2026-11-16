@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Schedules · SpendWise</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E💸%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/app.css">
+</head>
+<body data-app="1" data-page="schedules">
+<script src="/js/theme-boot.js"></script>
+
+<div class="bg"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div></div>
+
+<nav id="nav"></nav>
+
+<main class="page">
+  <div class="page-head">
+    <h2>Schedules</h2>
+    <p>Rent, salary, subscriptions: set it once and SpendWise knows what is due next.</p>
+  </div>
+
+  <section class="panel" id="queuePanel" hidden>
+    <div class="panel-head"><h3>⏳ Waiting for your approval</h3><span class="hint" id="queueHint"></span></div>
+    <div class="row-list" id="queueList"></div>
+  </section>
+
+  <section class="panel">
+    <div class="pay-tools">
+      <select id="sStatus" aria-label="Show">
+        <option value="all">All schedules</option>
+        <option value="active">Active</option>
+        <option value="paused">Paused</option>
+        <option value="finished">Finished</option>
+      </select>
+      <span class="grow-space"></span>
+      <button class="btn btn-primary btn-sm" id="sAdd" type="button">➕ New schedule</button>
+    </div>
+    <div class="row-list" id="sList"></div>
+    <p class="empty" id="sEmpty" hidden>No schedules yet. Add your rent, salary or a subscription and SpendWise will handle it on time.</p>
+    <p class="empty" id="sLoading">Loading…</p>
+  </section>
+
+  <details class="panel how">
+    <summary>How schedules work</summary>
+    <ul class="plain">
+      <li>🔁 A schedule repeats daily, weekly, monthly, quarterly, yearly or on a custom interval, or happens once.</li>
+      <li>✅ <b>Create automatically</b> makes the real transaction on the date (your rules run on it). <b>Ask me first</b> puts it in the approval list above, and your balance only changes when you approve.</li>
+      <li>⏸ Pausing stops everything. When you resume you can skip what you missed (default) or create it.</li>
+      <li>🛡 The same date is never created twice, even if you pay a bill early or edit the schedule.</li>
+    </ul>
+  </details>
+</main>
+
+<div class="toast" id="toast"></div>
+<script type="module" src="/js/layout.js"></script>
+<script type="module" src="/js/pages/schedules.js"></script>
+</body>
+</html>

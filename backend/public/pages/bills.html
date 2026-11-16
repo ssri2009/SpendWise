@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bills · SpendWise</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E💸%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/app.css">
+</head>
+<body data-app="1" data-page="bills">
+<script src="/js/theme-boot.js"></script>
+
+<div class="bg"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div></div>
+
+<nav id="nav"></nav>
+
+<main class="page">
+  <div class="page-head">
+    <h2>Bills &amp; subscriptions</h2>
+    <p>What is overdue, what is coming up, and what you have already paid.</p>
+  </div>
+
+  <div class="tools bills-tools">
+    <select id="bDays" aria-label="Show upcoming for">
+      <option value="14">Next 14 days</option>
+      <option value="30" selected>Next 30 days</option>
+      <option value="60">Next 60 days</option>
+      <option value="90">Next 90 days</option>
+    </select>
+    <select id="bAccount" aria-label="Account"></select>
+  </div>
+
+  <section class="summary four" aria-label="Bills summary">
+    <div class="s-card exp"><small>Overdue</small><h3 id="tOver">₹0</h3><span class="hint" id="hOver"></span></div>
+    <div class="s-card bal"><small>Coming up</small><h3 id="tUp">₹0</h3><span class="hint" id="hUp"></span></div>
+    <div class="s-card inc"><small>Paid recently</small><h3 id="tPaid">₹0</h3><span class="hint" id="hPaid"></span></div>
+    <div class="s-card net"><small>Subscriptions &amp; repeating bills</small><h3 id="tSub">₹0</h3><span class="hint" id="hSub"></span></div>
+  </section>
+
+  <section class="panel" id="overPanel" hidden>
+    <h3>🚨 Overdue</h3>
+    <div class="row-list" id="overList"></div>
+  </section>
+  <section class="panel">
+    <h3>📅 Upcoming</h3>
+    <div class="row-list" id="upList"></div>
+    <p class="empty" id="upEmpty" hidden>Nothing due in this period. 🎉</p>
+  </section>
+  <section class="panel">
+    <h3>✅ Paid</h3>
+    <div class="row-list" id="paidList"></div>
+    <p class="empty" id="paidEmpty" hidden>No paid bills in the last 60 days.</p>
+  </section>
+  <section class="panel" id="skipPanel" hidden>
+    <h3>⏭ Skipped</h3>
+    <div class="row-list" id="skipList"></div>
+  </section>
+</main>
+
+<div class="toast" id="toast"></div>
+<script type="module" src="/js/layout.js"></script>
+<script type="module" src="/js/pages/bills.js"></script>
+</body>
+</html>

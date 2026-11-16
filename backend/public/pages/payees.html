@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Payees · SpendWise</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E💸%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/app.css">
+</head>
+<body data-app="1" data-page="payees">
+<script src="/js/theme-boot.js"></script>
+
+<div class="bg"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div></div>
+
+<nav id="nav"></nav>
+
+<main class="page">
+  <div class="page-head">
+    <h2>Payees</h2>
+    <p>Who you pay and who pays you. Tidy the list so rules and reports stay accurate.</p>
+  </div>
+  <div class="panel">
+    <div class="pay-tools">
+      <input id="pSearch" type="search" placeholder="Search payees…" aria-label="Search payees" maxlength="60">
+      <select id="pStatus" aria-label="Show">
+        <option value="active">Active</option>
+        <option value="archived">Archived</option>
+        <option value="all">All</option>
+      </select>
+      <select id="pSort" aria-label="Sort by">
+        <option value="name">Name</option>
+        <option value="usage">Most used</option>
+        <option value="last">Recently used</option>
+      </select>
+      <button class="small-btn" id="pMerge" type="button" disabled>Merge selected…</button>
+      <button class="btn btn-primary btn-sm" id="pAdd" type="button">➕ New payee</button>
+    </div>
+    <div class="list-head"><span id="pCount"></span></div>
+    <div class="row-list" id="pList"></div>
+    <p class="empty" id="pEmpty" hidden>No payees here. They are created as you add transactions, or add one yourself.</p>
+    <p class="empty" id="pLoading">Loading…</p>
+    <div class="more"><button class="small-btn" id="pMore" type="button" hidden>Load more</button></div>
+  </div>
+</main>
+
+<div class="toast" id="toast"></div>
+<script type="module" src="/js/layout.js"></script>
+<script type="module" src="/js/pages/payees.js"></script>
+</body>
+</html>

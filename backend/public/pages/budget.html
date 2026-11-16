@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Budget · SpendWise</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E💸%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/app.css">
+</head>
+<body data-app="1" data-page="budget">
+<script src="/js/theme-boot.js"></script>
+
+<div class="bg"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div></div>
+
+<nav id="nav"></nav>
+
+<main class="page">
+  <div class="dash-head">
+    <div class="page-head">
+      <h2>Budget</h2>
+      <p>Give every rupee a job. Money you have not assigned yet waits in <b>To Budget</b>.</p>
+    </div>
+    <div class="tools month-nav">
+      <button class="small-btn" id="prevM" type="button" aria-label="Previous month">◀</button>
+      <select id="monthSel" aria-label="Month"></select>
+      <button class="small-btn" id="nextM" type="button" aria-label="Next month">▶</button>
+      <button class="small-btn" id="todayM" type="button">This month</button>
+    </div>
+  </div>
+
+  <section class="summary four" aria-label="Budget summary">
+    <div class="s-card bal tb" id="tbCard">
+      <small>To Budget</small><h3 id="sToBudget">₹0</h3><span class="hint" id="sToBudgetHint">&nbsp;</span>
+    </div>
+    <div class="s-card net"><small>Assigned</small><h3 id="sAssigned">₹0</h3><span class="hint">Given to categories this month</span></div>
+    <div class="s-card exp"><small>Activity</small><h3 id="sActivity">₹0</h3><span class="hint">Spent in categories this month</span></div>
+    <div class="s-card inc"><small>Available</small><h3 id="sAvailable">₹0</h3><span class="hint">Left in all categories</span></div>
+  </section>
+
+  <div id="banners" class="banners"></div>
+
+  <details class="panel tb-explain" id="tbExplain">
+    <summary>How is To Budget worked out?</summary>
+    <div id="tbRows" class="tb-rows"></div>
+    <p class="tb-foot">Unspent money in a category rolls over to the next month by itself. Money you spend with no category comes straight out of To Budget until you categorize it.</p>
+  </details>
+
+  <div class="panel budget-panel">
+    <div class="bg-row bg-colhead" role="row">
+      <div class="bg-name">Category</div>
+      <div class="bg-num">Assigned</div>
+      <div class="bg-num">Activity</div>
+      <div class="bg-num">Available</div>
+    </div>
+    <p class="empty" id="loading">Loading…</p>
+    <div id="grid"></div>
+    <div class="inline-form add-group">
+      <div class="field">
+        <label for="newGroup">New group</label>
+        <input id="newGroup" type="text" maxlength="40" placeholder="e.g. Fun, Savings, Kids" autocomplete="off">
+      </div>
+      <button class="small-btn" id="addGroupBtn" type="button">Add group</button>
+    </div>
+    <p class="bg-tip">Tip: type an amount in <b>Assigned</b> and press Enter. Click a category's <b>Available</b> amount to move money. Drag <b>⋮⋮</b> to reorder (or use ⋯ → Move up / down).</p>
+  </div>
+
+  <details class="panel" id="histPanel">
+    <summary>Move-money history</summary>
+    <div class="hist-tools">
+      <button class="small-btn active" id="histMonth" type="button">This month</button>
+      <button class="small-btn" id="histAll" type="button">All months</button>
+    </div>
+    <div id="histList" class="hist-list"></div>
+  </details>
+</main>
+
+<div class="toast" id="toast"></div>
+<script type="module" src="/js/layout.js"></script>
+<script type="module" src="/js/pages/budget.js"></script>
+</body>
+</html>

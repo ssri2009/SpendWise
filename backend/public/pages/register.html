@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sign up · SpendWise</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E💸%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/app.css">
+</head>
+<body data-page="register">
+<script src="/js/theme-boot.js"></script>
+
+<div class="bg"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div></div>
+
+<nav id="nav"></nav>
+
+<main class="auth-wrap">
+  <div class="auth-card">
+    <h1>Create your account</h1>
+    <p class="lead">Your data stays private to your account.</p>
+    <form id="form" class="stack" novalidate>
+      <div class="field">
+        <label for="displayName">Your name</label>
+        <input id="displayName" name="displayName" type="text" maxlength="40" autocomplete="name" required autofocus>
+      </div>
+      <div class="field">
+        <label for="email">Email</label>
+        <input id="email" name="email" type="email" autocomplete="username" required>
+      </div>
+      <div class="field">
+        <label for="password">Password</label>
+        <input id="password" name="password" type="password" minlength="10" autocomplete="new-password" required>
+        <span class="hint">At least 10 characters. A few random words works well.</span>
+      </div>
+      <div class="field">
+        <label for="confirm">Confirm password</label>
+        <input id="confirm" name="confirm" type="password" autocomplete="new-password" required>
+      </div>
+      <p class="err" id="err" role="alert"></p>
+      <button class="btn btn-primary" id="submit" type="submit">Create account</button>
+    </form>
+    <p class="notice" id="closed" hidden>Sign-ups are turned off on this server. Ask the owner for an account, or <a href="/login">log in</a>.</p>
+    <p class="alt">Already have an account? <a href="/login">Log in</a></p>
+  </div>
+</main>
+
+<div class="toast" id="toast"></div>
+<script type="module" src="/js/layout.js"></script>
+<script type="module" src="/js/pages/register.js"></script>
+</body>
+</html>

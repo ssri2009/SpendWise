@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rules · SpendWise</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E💸%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/app.css">
+</head>
+<body data-app="1" data-page="rules">
+<script src="/js/theme-boot.js"></script>
+
+<div class="bg"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div></div>
+
+<nav id="nav"></nav>
+
+<main class="page">
+  <div class="page-head">
+    <h2>Rules</h2>
+    <p>Teach SpendWise to categorize for you.</p>
+  </div>
+  <details class="panel tb-explain" id="howPanel">
+    <summary>How rules run</summary>
+    <ol class="how">
+      <li>Rules run <b>top to bottom</b>: position 1 first. Drag a rule (or use ▲ ▼) to change the order. New rules go to the bottom.</li>
+      <li><b>Every</b> matching rule runs, not just the first. Each rule sees the transaction as the earlier rules left it.</li>
+      <li>If two rules set the same thing (category, payee, cleared), the <b>lower one wins</b>. Notes from all matching rules are added together, and the same note is never added twice.</li>
+      <li>A rule with <b>“stop after this rule”</b> ends the run when it matches.</li>
+      <li>Disabled rules are skipped.</li>
+      <li>Rules run when a transaction is <b>added</b> or <b>imported</b>. Editing a transaction never runs them. Your existing transactions change only if you press <b>Re-apply rules</b> and confirm.</li>
+    </ol>
+  </details>
+
+  <div class="panel">
+    <div class="pay-tools">
+      <span id="rCount" class="grow-text"></span>
+      <button class="small-btn" id="rReapply" type="button">♻ Re-apply rules…</button>
+      <button class="btn btn-primary btn-sm" id="rAdd" type="button">➕ New rule</button>
+    </div>
+    <div class="row-list" id="rList"></div>
+    <p class="empty" id="rEmpty" hidden>No rules yet. Example: if the description contains “swiggy”, set category Food and payee Swiggy.</p>
+    <p class="empty" id="rLoading">Loading…</p>
+  </div>
+</main>
+
+<div class="toast" id="toast"></div>
+<script type="module" src="/js/layout.js"></script>
+<script type="module" src="/js/pages/rules.js"></script>
+</body>
+</html>

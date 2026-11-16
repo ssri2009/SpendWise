@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Import CSV · SpendWise</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E💸%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/app.css">
+</head>
+<body data-app="1" data-page="import">
+<script src="/js/theme-boot.js"></script>
+
+<div class="bg"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div></div>
+
+<nav id="nav"></nav>
+
+<main class="page">
+  <div class="page-head">
+    <h2>Import a CSV file</h2>
+    <p>Bank statement or spreadsheet: preview it, match the columns, review duplicates, then import. Nothing is saved until you press Import.</p>
+  </div>
+
+  <div class="steps">
+    <!-- 1 -->
+    <section class="panel" id="step1">
+      <div class="step-head"><span class="step-no">1</span><h3>Choose a file</h3></div>
+      <div class="inline-form" style="margin-top:0">
+        <div class="field"><label for="file">CSV file</label><input id="file" type="file" accept=".csv,.txt,.tsv,text/csv,text/plain"></div>
+        <div class="field"><label for="account">Import into account</label><select id="account"></select></div>
+      </div>
+      <div class="opt-grid">
+        <div class="field"><label for="dateFormat">Dates look like</label>
+          <select id="dateFormat">
+            <option value="auto">Automatic (day first, e.g. 05/11/2026)</option>
+            <option value="DMY">Day / Month / Year</option>
+            <option value="MDY">Month / Day / Year</option>
+          </select></div>
+        <div class="field"><label for="amountMode">Amount signs</label>
+          <select id="amountMode">
+            <option value="signed">Negative = money out (usual)</option>
+            <option value="inverted">Positive = money out (some card files)</option>
+          </select></div>
+        <div class="field"><label for="dupMode">Possible duplicates</label>
+          <select id="dupMode">
+            <option value="skip">Skip them (you can override each one)</option>
+            <option value="import">Import them anyway</option>
+          </select></div>
+      </div>
+      <div class="opt-grid">
+        <label class="check"><input type="checkbox" class="tx-check" id="hasHeader" checked> First row has column names</label>
+        <label class="check"><input type="checkbox" class="tx-check" id="applyRules" checked> Apply my rules (category, payee, notes, cleared)</label>
+        <label class="check"><input type="checkbox" class="tx-check" id="createAccounts"> Create accounts named in the file that don't exist yet</label>
+      </div>
+      <p class="err" id="err1" role="alert"></p>
+    </section>
+
+    <!-- 2 -->
+    <section class="panel" id="step2" hidden>
+      <div class="step-head"><span class="step-no">2</span><h3>Match the columns</h3></div>
+      <p class="dz-note" id="fileInfo"></p>
+      <div class="map-grid" id="mapGrid"></div>
+      <p class="dz-note" style="margin-top:10px">Amount: pick one <b>Amount</b> column, or use <b>Money out</b> / <b>Money in</b> if your bank has separate columns. If there is a Type column (income / expense), pick it and amounts can be positive.</p>
+      <h4 style="margin:16px 0 8px">First rows of your file</h4>
+      <div class="sample-wrap"><table class="prev-table" id="sample"></table></div>
+    </section>
+
+    <!-- 3 -->
+    <section class="panel" id="step3" hidden>
+      <div class="step-head"><span class="step-no">3</span><h3>Preview and review</h3></div>
+      <div class="sum-chips" id="chips"></div>
+      <div class="tabs" id="tabs"></div>
+      <div class="prev-wrap"><table class="prev-table" id="prev"></table></div>
+      <div class="more"><button class="small-btn" id="showMore" type="button" hidden>Show more rows</button></div>
+      <div class="inline-form">
+        <button class="btn btn-primary" id="doImport" type="button" disabled>Import</button>
+        <button class="small-btn" id="errCsv" type="button" hidden>⬇ Download error report</button>
+        <label class="check"><input type="checkbox" class="tx-check" id="abortOnErr"> Stop and import nothing if any row has an error</label>
+      </div>
+      <p class="err" id="err3" role="alert"></p>
+    </section>
+
+    <!-- 4 -->
+    <section class="panel" id="step4" hidden>
+      <div class="step-head"><span class="step-no">✓</span><h3>Import summary</h3></div>
+      <div class="result-grid" id="resultGrid"></div>
+      <div id="resultNotes"></div>
+      <div id="resultErrors"></div>
+      <div class="inline-form">
+        <a class="btn btn-primary btn-sm" href="/transactions?month=all" id="viewTx">View transactions →</a>
+        <a class="small-btn" href="/reconcile" id="goRecon">Reconcile this account</a>
+        <button class="small-btn" id="again" type="button">Import another file</button>
+        <button class="small-btn" id="errCsv2" type="button" hidden>⬇ Download error report</button>
+      </div>
+    </section>
+  </div>
+</main>
+
+<div class="toast" id="toast"></div>
+<script type="module" src="/js/layout.js"></script>
+<script type="module" src="/js/pages/import.js"></script>
+</body>
+</html>

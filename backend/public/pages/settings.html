@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Settings · SpendWise</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E💸%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/app.css">
+</head>
+<body data-app="1" data-page="settings">
+<script src="/js/theme-boot.js"></script>
+
+<div class="bg"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div></div>
+
+<nav id="nav"></nav>
+
+<main class="page">
+  <div class="page-head">
+    <h2>Settings</h2>
+    <p>Your account, categories and data.</p>
+  </div>
+
+  <div class="stack-panels">
+    <section class="panel">
+      <h3>👤 Profile</h3>
+      <dl class="kv">
+        <dt>Name</dt><dd data-user-name></dd>
+        <dt>Email</dt><dd data-user-email></dd>
+        <dt>Currency</dt><dd data-user-currency></dd>
+        <dt>Budget mode</dt><dd data-user-mode></dd>
+      </dl>
+    </section>
+
+    <section class="panel" id="accountsPanel">
+      <h3>🏦 Accounts</h3>
+      <div class="row-list" id="accounts"></div>
+      <form class="inline-form" id="addAccount" novalidate>
+        <div class="field"><label for="accName">New account</label><input id="accName" type="text" maxlength="40" placeholder="e.g. HDFC Savings" autocomplete="off"></div>
+        <div class="field"><label for="accType">Type</label><select id="accType"></select></div>
+        <div class="field"><label for="accOpen">Opening balance</label><input id="accOpen" type="text" inputmode="decimal" placeholder="0" autocomplete="off"></div>
+        <label class="check"><input type="checkbox" class="tx-check" id="accOff"> Off budget</label>
+        <button class="small-btn" type="submit">Add account</button>
+      </form>
+      <p class="err" id="accErr" role="alert"></p>
+    </section>
+
+    <section class="panel" id="categoriesPanel">
+      <h3>🏷️ Categories</h3>
+      <p class="modal-text">Rename, add, hide, merge or delete categories. Drag a row to reorder it or move it to another group (or use the ▲ ▼ buttons).</p>
+      <div id="categories"></div>
+      <form class="inline-form" id="addGroup" novalidate>
+        <div class="field"><label for="grpName">New group</label><input id="grpName" type="text" maxlength="40" placeholder="e.g. Subscriptions" autocomplete="off"></div>
+        <label class="check"><input type="checkbox" class="tx-check" id="grpIncome"> Income group</label>
+        <button class="small-btn" type="submit">Add group</button>
+      </form>
+    </section>
+
+    <section class="panel" id="dataPanel">
+      <h3>💾 Your data</h3>
+      <p class="modal-text">Download everything as a backup, or bring in the backup file from the old SpendWise (the one named <code>spendwise-backup-….json</code>). Importing the same file twice is safe: records you already have are skipped.</p>
+      <div class="actions-col">
+        <a class="small-btn" href="/api/export/full.json" download>💾 Download full backup</a>
+        <a class="small-btn" href="/api/export/transactions.csv" download>⬇ Export all as CSV</a>
+        <a class="small-btn" href="/import">📥 Import a CSV (bank statement)…</a>
+      </div>
+      <div class="inline-form">
+        <div class="field"><label for="importAccount">Import into account</label><select id="importAccount"></select></div>
+        <button class="small-btn" id="importBtn" type="button">📥 Import backup file</button>
+        <input id="importFile" type="file" accept=".json,application/json" hidden>
+      </div>
+      <label class="check roll-check"><input type="checkbox" id="importRules" checked> Apply my rules to imported transactions <small>(set category, payee, notes, cleared; see the Rules page)</small></label>
+      <div class="notice import-result" id="importResult" hidden role="status"></div>
+    </section>
+  </div>
+</main>
+
+<div class="toast" id="toast"></div>
+<script type="module" src="/js/layout.js"></script>
+<script type="module" src="/js/pages/settings.js"></script>
+</body>
+</html>

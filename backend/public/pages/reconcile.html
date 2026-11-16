@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reconcile · SpendWise</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E💸%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/app.css">
+</head>
+<body data-app="1" data-page="reconcile">
+<script src="/js/theme-boot.js"></script>
+
+<div class="bg"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div></div>
+
+<nav id="nav"></nav>
+
+<main class="page">
+  <div class="dash-head">
+    <div class="page-head">
+      <h2>Reconcile</h2>
+      <p>Check SpendWise against your bank statement, one account at a time.</p>
+    </div>
+    <div class="tools">
+      <select id="account" aria-label="Account to reconcile"></select>
+    </div>
+  </div>
+
+  <section class="rec-cards" aria-label="Balances">
+    <div class="rec-card" title="Opening balance + every transaction marked cleared. This is the number to compare with your statement.">
+      <small>Cleared balance</small><h3 id="cCleared">₹0</h3><span class="hint" id="cClearedN">Compare this with your statement</span>
+    </div>
+    <div class="rec-card" title="Transactions that have not shown up on a statement yet. They are not part of the cleared balance.">
+      <small>Uncleared</small><h3 id="cUncleared">₹0</h3><span class="hint" id="cUnclearedN"></span>
+    </div>
+    <div class="rec-card" title="Cleared + uncleared. The same figure as the account on the Settings page.">
+      <small>SpendWise balance</small><h3 id="cTotal">₹0</h3><span class="hint">Cleared + uncleared</span>
+    </div>
+    <div class="rec-card">
+      <small>Last reconciled</small><h3 id="cLast">Never</h3><span class="hint" id="cLastHint"></span>
+    </div>
+  </section>
+
+  <div class="rec-layout">
+    <div class="panel">
+      <h3>🏦 Your statement</h3>
+      <form id="recForm" class="stack" novalidate>
+        <div class="field"><label for="stDate">Statement date</label><input id="stDate" type="date"></div>
+        <div class="field"><label for="stBal">Balance on the statement</label><input id="stBal" type="text" inputmode="decimal" placeholder="e.g. 13000" autocomplete="off"></div>
+        <div class="field"><label for="stNote">Note (optional)</label><input id="stNote" type="text" maxlength="200" placeholder="e.g. October statement" autocomplete="off"></div>
+        <div class="rec-diff" id="diff" role="status" aria-live="polite">Type the balance from your statement to compare.</div>
+        <p class="err" id="recErr" role="alert"></p>
+        <div class="rec-actions">
+          <button class="btn btn-primary" id="finish" type="submit" disabled>Finish reconciliation</button>
+          <button class="small-btn" id="adjust" type="button" hidden></button>
+        </div>
+      </form>
+      <p class="modal-text" style="margin-top:14px">Tick the transactions that appear on your statement. Finishing locks them so your history stays true to what the bank said.</p>
+    </div>
+
+    <div class="panel">
+      <h3>🧾 Transactions to check</h3>
+      <div class="bulk" style="background:none;border-color:var(--glass-border)">
+        <button class="small-btn" id="clearAll" type="button">✓ Mark all shown as cleared</button>
+        <select id="show" aria-label="Show">
+          <option value="all">All open transactions</option>
+          <option value="no">Not cleared yet</option>
+          <option value="yes">Cleared (waiting to be reconciled)</option>
+        </select>
+        <a class="small-btn" id="viewTx" href="/transactions?month=all">Open in Transactions →</a>
+      </div>
+      <div class="list-head"><span id="txCount"></span></div>
+      <div class="row-list" id="txList"></div>
+      <p class="empty" id="txEmpty" hidden>No open transactions in this account.</p>
+      <p class="empty" id="txLoading">Loading…</p>
+    </div>
+  </div>
+
+  <div class="panel" style="margin-top:22px">
+    <h3>📜 Reconciliation history</h3>
+    <div class="hist-wrap">
+      <table class="hist-table" id="hist" hidden>
+        <thead><tr><th>Statement date</th><th>Done on</th><th class="num">Statement</th><th class="num">SpendWise was</th><th class="num">Difference</th><th class="num">Transactions</th><th></th></tr></thead>
+        <tbody id="histBody"></tbody>
+      </table>
+    </div>
+    <p class="empty" id="histEmpty">Nothing reconciled yet for this account.</p>
+  </div>
+</main>
+
+<div class="toast" id="toast"></div>
+<script type="module" src="/js/layout.js"></script>
+<script type="module" src="/js/pages/reconcile.js"></script>
+</body>
+</html>
