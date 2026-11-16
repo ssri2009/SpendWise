@@ -1,0 +1,33 @@
+# Self-hosting: `docker compose up -d --build`
+# Put SESSION_SECRET (and optionally ALLOW_SIGNUP=false, DOMAIN) in a .env file next to this one.
+services:
+  spendwise:
+    build: .
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      TRUST_PROXY: "1"            # Caddy sits in front
+      TZ: ${TZ:-UTC}              # decides what "today" is for scheduled bills, e.g. Asia/Kolkata
+    volumes:
+      - spendwise_data:/app/data  # your database lives here
+    ports:
+      - "127.0.0.1:3000:3000"     # local only; Caddy exposes it publicly
+
+  caddy:                          # automatic HTTPS (needs a domain pointing at this server)
+    image: caddy:2
+    restart: unless-stopped
+    profiles: ["https"]
+    environment:
+      DOMAIN: ${DOMAIN:-localhost}
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - spendwise
+
+volumes:
+  spendwise_data:
+  caddy_data:
