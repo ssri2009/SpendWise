@@ -92,11 +92,17 @@ function createApp(config) {
   purgeTimer.unref();
 
   const cookieOpts = (httpOnly) => ({
-    maxAge: config.sessionDays * 86400, httpOnly, secure: config.secureCookies, sameSite: 'Lax',
+    maxAge: config.sessionDays * 86400,
+    httpOnly,
+    secure: config.secureCookies,
+    sameSite: config.secureCookies ? 'None' : 'Lax',
   });
   const setSid = (res, token) => addSetCookie(res, serializeCookie(SID, token, cookieOpts(true)));
   const clearSid = (res) => addSetCookie(res, serializeCookie(SID, '', {
-    maxAge: 0, httpOnly: true, secure: config.secureCookies, sameSite: 'Lax',
+    maxAge: 0,
+    httpOnly: true,
+    secure: config.secureCookies,
+    sameSite: config.secureCookies ? 'None' : 'Lax',
   }));
   const issueCsrf = (res) => {
     const token = makeCsrf(config.sessionSecret);
