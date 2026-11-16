@@ -21,7 +21,7 @@ import { useQuery } from '@tanstack/react-query';
 
    Errors are { error: string, code?: string }. 429 carries Retry-After (s).
    --------------------------------------------------------------------- */
-
+const API_BASE_URL = import.meta.env.VITE_API_URL || '';
 const CSRF_COOKIE = 'sw_csrf';
 const CSRF_HEADER = 'X-CSRF-Token';
 const CSRF_ENDPOINT = '/api/auth/csrf';
