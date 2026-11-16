@@ -102,13 +102,15 @@ async function send(method: Method, path: string, body: unknown, token: string, 
 
 const fullUrl = `${API_BASE_URL}${path}`;
 
-res = await fetch(fullUrl, {
-  method,
-  headers,
-  body: body === undefined ? undefined : JSON.stringify(body),
-  credentials: 'include',
-  signal,
-});
+let res: Response;
+try {
+  res = await fetch(fullUrl, {
+     method,
+     headers,
+     body: body === undefined ? undefined : JSON.stringify(body),
+     credentials: 'include',
+     signal,
+   });
   } catch (err) {
     if (signal?.aborted) throw err; // let React Query see its own cancellation
     throw new ApiError(0, NETWORK_MESSAGE);
