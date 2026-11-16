@@ -266,7 +266,10 @@ function createApp(config) {
     const origin = ctx.req.headers.origin;
     if (origin) {
       let ok = false;
-      try { ok = new URL(origin).host === ctx.req.headers.host; } catch { /* invalid origin */ }
+      try {
+        const u = new URL(origin);
+        ok = u.host === ctx.req.headers.host || u.hostname.endsWith('.vercel.app') || u.hostname === 'localhost';
+      } catch { /* invalid origin */ }
       if (!ok) return { message: 'Cross-origin request blocked.' };
     }
     if (!csrfValid(config.sessionSecret, ctx.cookies[CSRF], ctx.req.headers['x-csrf-token'])) {
