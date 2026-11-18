@@ -1,18 +1,16 @@
 import type { UseQueryResult } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
 import { ArrowDownCircle, ArrowUpCircle, Landmark, Scale, type LucideIcon } from 'lucide-react';
-import { useId, type ReactNode } from 'react';
+import type { ReactNode } from 'react';
 import { Link } from 'react-router';
-import { Area, AreaChart, ResponsiveContainer, YAxis } from 'recharts';
 import { formatMoney, formatPct, type MoneyFormat } from '../../lib/format';
-import { CHART_MOTION_LINE } from '../../lib/motion';
 import type { AccountsResponse, MonthlySummary, NetWorthReport } from '../../types/api';
-import { AnimatedNumber, Delta, ErrorState, rise, Skeleton, svgId } from './ui';
+import { AnimatedNumber, Delta, ErrorState, rise, Skeleton } from './ui';
 
 type Tone = 'accent' | 'income' | 'expense' | 'neutral';
 
 const TONE: Record<Tone, { icon: string; glow: string; value: string }> = {
-  accent: { icon: 'bg-accent/12 text-accent', glow: 'bg-accent', value: 'text-fg' },
+  accent: { icon: 'bg-accent/12 text-accent', glow: 'accent-gradient', value: 'text-fg' },
   income: { icon: 'bg-income/12 text-income', glow: 'bg-income', value: 'text-income' },
   expense: { icon: 'bg-expense/12 text-expense', glow: 'bg-expense', value: 'text-expense' },
   neutral: { icon: 'bg-subtle text-muted', glow: 'bg-muted', value: 'text-fg' },
@@ -71,28 +69,6 @@ function StatCard({ label, icon: Icon, tone, valueMinor, fmt, loading, error, on
 
 /* ------------------------------------------------------------------ */
 
-function Sparkline({ values }: { values: number[] }) {
-  const gradientId = svgId(`spark-${useId()}`);
-  if (values.length < 2) return null;
-  const data = values.map((v, i) => ({ i, v }));
-  return (
-    <div className="pointer-events-none absolute inset-x-0 bottom-0 h-14 opacity-70" aria-hidden>
-      <ResponsiveContainer width="100%" height="100%">
-        <AreaChart data={data} margin={{ top: 4, right: 0, bottom: 0, left: 0 }}>
-          <defs>
-            <linearGradient id={gradientId} x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" style={{ stopColor: 'var(--sw-accent)', stopOpacity: 0.35 }} />
-              <stop offset="100%" style={{ stopColor: 'var(--sw-accent)', stopOpacity: 0 }} />
-            </linearGradient>
-          </defs>
-          <YAxis hide domain={['dataMin', 'dataMax']} />
-          <Area type="monotone" dataKey="v" stroke="var(--sw-accent)" strokeWidth={2} fill={`url(#${gradientId})`} {...CHART_MOTION_LINE} />
-        </AreaChart>
-      </ResponsiveContainer>
-    </div>
-  );
-}
-
 export function TotalFundsCard({
   accounts,
   netWorth,
@@ -132,7 +108,6 @@ export function TotalFundsCard({
           </>
         )
       }
-      extra={<Sparkline values={netWorth.data?.series.map((p) => p.netWorthMinor) ?? []} />}
     />
   );
 }
