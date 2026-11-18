@@ -12,7 +12,7 @@ import { AnimatedNumber, Delta, ErrorState, rise, Skeleton, svgId } from './ui';
 type Tone = 'accent' | 'income' | 'expense' | 'neutral';
 
 const TONE: Record<Tone, { icon: string; glow: string; value: string }> = {
-  accent: { icon: 'bg-accent/12 text-accent', glow: 'accent-gradient', value: 'text-fg' },
+  accent: { icon: 'bg-accent/12 text-accent', glow: 'bg-accent', value: 'text-fg' },
   income: { icon: 'bg-income/12 text-income', glow: 'bg-income', value: 'text-income' },
   expense: { icon: 'bg-expense/12 text-expense', glow: 'bg-expense', value: 'text-expense' },
   neutral: { icon: 'bg-subtle text-muted', glow: 'bg-muted', value: 'text-fg' },
