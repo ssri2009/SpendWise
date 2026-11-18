@@ -3,9 +3,9 @@ import { motion } from 'framer-motion';
 import { ArrowDownCircle, ArrowUpCircle, Landmark, Scale, type LucideIcon } from 'lucide-react';
 import type { ReactNode } from 'react';
 import { Link } from 'react-router';
-import { formatMoney, formatPct, type MoneyFormat } from '../../lib/format';
-import type { AccountsResponse, MonthlySummary, NetWorthReport } from '../../types/api';
-import { AnimatedNumber, Delta, ErrorState, rise, Skeleton } from './ui';
+import { formatMoney, formatPct, type MoneyFormat } from '../lib/format';
+import type { AccountsResponse, MonthlySummary, NetWorthReport } from '../types/api';
+import { AnimatedNumber, Delta, ErrorState, rise, Skeleton } from '../ui';
 
 type Tone = 'accent' | 'income' | 'expense' | 'neutral';
 
@@ -54,7 +54,7 @@ function StatCard({ label, icon: Icon, tone, valueMinor, fmt, loading, error, on
           <ErrorState error={error} onRetry={onRetry} compact />
         ) : valueMinor !== undefined ? (
           <p className={`text-[1.75rem] font-bold leading-tight tracking-tight sm:text-3xl ${t.value}`}>
-            <AnimatedNumber value={valueMinor} format={(n) => formatMoney(n, fmt, { signed })} />
+            <AnimatedNumber value={valueMinor} format={(n: number) => formatMoney(n, fmt, { signed })} />
           </p>
         ) : null}
       </div>
