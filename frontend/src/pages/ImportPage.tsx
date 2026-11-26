@@ -16,6 +16,7 @@ import {
 } from '../components/import/csvImport';
 import { GhostButton, PrimaryButton } from '../components/ui/Dialog';
 import { useToast } from '../components/ui/Toast';
+import { ExportLink } from '../components/ui/ExportLink';
 import { useMoneyFormat } from '../hooks/useDashboard';
 import { useAccountList } from '../hooks/useTransactions';
 import type { MoneyFormat } from '../lib/format';
@@ -243,18 +244,18 @@ function ExportTab() {
         <p className="mb-4 text-sm text-muted">
           Every account, category and transaction (splits included) in one .json file. Keep it somewhere safe, or import it into another SpendWise.
         </p>
-        <a href="/api/export/full.json" download className={`${link} accent-gradient text-accent-fg shadow-lg shadow-accent/25`}>
+        <ExportLink href="/api/export/full.json" fallbackName="spendwise-backup.json" className={`${link} accent-gradient text-accent-fg shadow-lg shadow-accent/25`}>
           <FileJson className="size-4" aria-hidden /> Download full backup
-        </a>
+        </ExportLink>
       </Card>
       <Card title="Transactions for a spreadsheet" icon={FileSpreadsheet}>
         <p className="mb-4 text-sm text-muted">
           All transactions as a .csv that opens in Excel or Google Sheets. Split transactions get one row per part, so category totals add up.
         </p>
         <div className="flex flex-wrap gap-2">
-          <a href="/api/export/transactions.csv" download className={`${link} border border-line bg-surface hover:bg-subtle`}>
+          <ExportLink href="/api/export/transactions.csv" fallbackName="spendwise-transactions.csv" className={`${link} border border-line bg-surface hover:bg-subtle`}>
             <Download className="size-4" aria-hidden /> Download all transactions
-          </a>
+          </ExportLink>
           <Link to="/transactions" className="inline-flex h-11 items-center gap-1.5 px-2 text-sm font-semibold text-accent hover:underline">
             Filter first, then export <ArrowRight className="size-4" aria-hidden />
           </Link>
