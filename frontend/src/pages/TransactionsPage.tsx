@@ -11,6 +11,7 @@ import { FilterChips, FiltersToggle, SearchBox, TxFilterPanel } from '../compone
 import { TxList, type RowHandlers } from '../components/transactions/TxList';
 import { Dialog, GhostButton, PrimaryButton } from '../components/ui/Dialog';
 import { useToast } from '../components/ui/Toast';
+import { ExportLink } from '../components/ui/ExportLink';
 import { useMoneyFormat } from '../hooks/useDashboard';
 import {
   afterTransactionWrite,
@@ -350,10 +351,10 @@ export default function TransactionsPage() {
           <button type="button" className={btn} onClick={() => setHelpOpen(true)} aria-label="Keyboard shortcuts (?)">
             <Keyboard className="size-4 text-muted" aria-hidden />
           </button>
-          <a className={btn} href={exportHref} download>
+          <ExportLink href={exportHref} fallbackName="spendwise-transactions.csv" className={btn}>
             <Download className="size-4 text-muted" aria-hidden />
             <span className="hidden sm:inline">Export</span>
-          </a>
+          </ExportLink>
           <button type="button" className={btn} onClick={() => setDrawer({ kind: 'import' })} disabled={lookupsLoading}>
             <Upload className="size-4 text-muted" aria-hidden />
             <span className="hidden sm:inline">Import CSV</span>
