@@ -1,9 +1,6 @@
 {
-  "$schema": "https://openapi.vercel.sh/vercel.json",
   "rewrites": [
-    {
-      "source": "/api/:path*",
-      "destination": "https://spendwise-q2iw.onrender.com/api/:path*"
-    }
+    { "source": "/api/:path*", "destination": "https://spendwise-q2iw.onrender.com/api/:path*" },
+    { "source": "/((?!api/).*)", "destination": "/index.html" }
   ]
 }
