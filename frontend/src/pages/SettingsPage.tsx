@@ -6,6 +6,7 @@ import { rise, stagger } from '../components/dashboard/ui';
 import { AccountsSection } from '../components/settings/AccountsSection';
 import { CategoriesSection } from '../components/settings/CategoriesSection';
 import { useToast } from '../components/ui/Toast';
+import { ExportLink } from '../components/ui/ExportLink';
 import { useLogout } from '../auth/session';
 import { useMoneyFormat } from '../hooks/useDashboard';
 import { useMe } from '../lib/api';
@@ -127,12 +128,12 @@ function DataSection() {
       <Card title="Back up" id="sw-set-backup">
         <p className="mb-4 text-sm text-muted">Download everything (accounts, categories and every transaction, splits included) as one file you can import again later.</p>
         <div className="flex flex-wrap gap-2">
-          <a href="/api/export/full.json" download className={`${link} accent-gradient text-accent-fg`}>
+          <ExportLink href="/api/export/full.json" fallbackName="spendwise-backup.json" className={`${link} accent-gradient text-accent-fg`}>
             <FileJson className="size-4" aria-hidden /> Download full backup
-          </a>
-          <a href="/api/export/transactions.csv" download className={`${link} border border-line bg-surface hover:bg-subtle`}>
+          </ExportLink>
+          <ExportLink href="/api/export/transactions.csv" fallbackName="spendwise-transactions.csv" className={`${link} border border-line bg-surface hover:bg-subtle`}>
             <FileSpreadsheet className="size-4" aria-hidden /> Transactions as CSV
-          </a>
+          </ExportLink>
         </div>
       </Card>
       <Card title="Bring data in" id="sw-set-import">
